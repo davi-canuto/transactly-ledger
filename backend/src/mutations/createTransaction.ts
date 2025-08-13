@@ -1,8 +1,8 @@
 import { GraphQLInt, GraphQLID, GraphQLNonNull } from 'graphql'
 import { mutationWithClientMutationId, fromGlobalId } from 'graphql-relay'
 import mongoose from 'mongoose'
-import { Account, Transaction, LedgerEntry, IAccount, ITransaction, ILedgerEntry } from '../models/index'
-import { TransactionType } from '../schema/types/Transaction'
+import { Account, Transaction, LedgerEntry, ITransaction } from '../models/index.js'
+import { TransactionType } from '../schema/types/Transaction.js'
 
 interface CreateTransactionInput {
   fromAccountId: string

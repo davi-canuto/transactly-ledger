@@ -3,7 +3,7 @@ import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 import cors from 'koa-cors'
 import { getGraphQLParameters, processRequest, renderGraphiQL, shouldRenderGraphiQL } from 'graphql-helix'
-import schema from './schema/index'
+import schema from './schema/index.js'
 import { connectDatabase } from './database.js'
 
 async function startServer(): Promise<void> {

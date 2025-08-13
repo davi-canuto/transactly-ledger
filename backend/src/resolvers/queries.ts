@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLInt, GraphQLNonNull, GraphQLID } from 'graphql'
 import { connectionArgs, fromGlobalId, ConnectionArguments } from 'graphql-relay'
-import { Account, Transaction, LedgerEntry, IAccount, ITransaction, ILedgerEntry } from '../models/index'
+import { Account, Transaction, LedgerEntry, IAccount, ITransaction, ILedgerEntry } from '../models/index.js'
 import {
   AccountConnection,
   TransactionConnection,

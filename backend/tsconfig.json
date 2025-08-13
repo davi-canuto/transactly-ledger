@@ -2,10 +2,10 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "allowJs": true,
+    "allowJs": false,
     "outDir": "./dist",
     "rootDir": "./",
     "strict": true,
@@ -23,7 +23,8 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": false,
     "noImplicitOverride": false,
-    "exactOptionalPropertyTypes": false,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "types": ["node", "jest"]
   },
   "include": [
