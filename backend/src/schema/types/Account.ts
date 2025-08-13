@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql'
 import { globalIdField } from 'graphql-relay'
-import { IAccount } from '../../models/index.js'
+import { IAccount } from '../../models/index'
 
 const AccountType = new GraphQLObjectType<IAccount>({
   name: 'Account',

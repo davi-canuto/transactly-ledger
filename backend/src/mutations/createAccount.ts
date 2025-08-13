@@ -1,7 +1,7 @@
 import { GraphQLString, GraphQLInt, GraphQLNonNull } from 'graphql'
 import { mutationWithClientMutationId } from 'graphql-relay'
-import { Account, IAccount } from '../models/index.js'
-import { AccountType } from '../schema/types/Account.js'
+import { Account, IAccount } from '../models/index'
+import { AccountType } from '../schema/types/Account'
 
 interface CreateAccountInput {
   name: string

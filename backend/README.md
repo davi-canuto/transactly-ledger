@@ -194,18 +194,18 @@ npm run test:watch
 ```
 src/
 ├── models/           # Mongoose models
-│   ├── Account.js
-│   ├── Transaction.js
+│   ├── Account
+│   ├── Transaction
 │   ├── LedgerEntry.js
-│   └── index.js
+│   └── index
 ├── schema/           # GraphQL schema definitions
 │   ├── types/        # GraphQL type definitions
 │   ├── nodeDefinitions.js
 │   ├── connections.js
-│   └── index.js
+│   └── index
 ├── mutations/        # GraphQL mutations
-│   ├── createAccount.js
-│   └── createTransaction.js
+│   ├── createAccount
+│   └── createTransaction
 ├── resolvers/        # GraphQL resolvers
 │   ├── queries.js
 │   └── mutations.js

@@ -1,6 +1,6 @@
 import { connectionDefinitions } from 'graphql-relay'
-import { AccountType } from './types/Account.js'
-import { TransactionType } from './types/Transaction.js'
+import { AccountType } from './types/Account'
+import { TransactionType } from './types/Transaction'
 import { LedgerEntryType } from './types/LedgerEntry.js'
 
 const { connectionType: AccountConnection } = connectionDefinitions({

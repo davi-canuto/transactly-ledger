@@ -1,6 +1,6 @@
 import { GraphQLObjectType } from 'graphql'
-import { createAccountMutation } from '../mutations/createAccount.js'
-import { createTransactionMutation } from '../mutations/createTransaction.js'
+import { createAccountMutation } from '../mutations/createAccount'
+import { createTransactionMutation } from '../mutations/createTransaction'
 
 const MutationType = new GraphQLObjectType({
   name: 'Mutation',

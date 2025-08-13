@@ -1,8 +1,8 @@
 import { GraphQLObjectType, GraphQLInt, GraphQLString } from 'graphql'
 import { globalIdField } from 'graphql-relay'
-import { AccountType } from './Account.js'
-import { TransactionType } from './Transaction.js'
-import { ILedgerEntry } from '../../models/index.js'
+import { AccountType } from './Account'
+import { TransactionType } from './Transaction'
+import { ILedgerEntry } from '../../models/index'
 
 const LedgerEntryType = new GraphQLObjectType<ILedgerEntry>({
   name: 'LedgerEntry',

@@ -1,7 +1,7 @@
 import { GraphQLObjectType, GraphQLInt, GraphQLString } from 'graphql'
 import { globalIdField } from 'graphql-relay'
-import { AccountType } from './Account.js'
-import { ITransaction } from '../../models/index.js'
+import { AccountType } from './Account'
+import { ITransaction } from '../../models/index'
 
 const TransactionType = new GraphQLObjectType<ITransaction>({
   name: 'Transaction',
