@@ -48,7 +48,6 @@ const createTransactionMutation = mutationWithClientMutationId<CreateTransaction
       throw new Error('Amount must be greater than zero')
     }
 
-    // For testing purposes, we'll run without transactions when replica set is not available
     const fromAccount = await Account.findById(fromId)
     const toAccount = await Account.findById(toId)
 
