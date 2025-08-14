@@ -2,7 +2,7 @@ import mongoose, { Document, Schema, Types } from 'mongoose'
 
 export interface ILedgerEntry extends Document {
   account: Types.ObjectId | any
-  amount_cents: number
+  amountCents: number
   transaction: Types.ObjectId | any
   meta: Record<string, any>
   createdAt: Date
@@ -17,7 +17,7 @@ const ledgerEntrySchema = new Schema<ILedgerEntry>(
       ref: 'Account',
       required: true,
     },
-    amount_cents: {
+    amountCents: {
       type: Number,
       required: true,
     },

@@ -15,7 +15,7 @@ const TransactionType = new GraphQLObjectType<ITransaction>({
       type: AccountType,
       resolve: (transaction: ITransaction) => transaction.to,
     },
-    amount_cents: {
+    amountCents: {
       type: GraphQLInt,
     },
     createdAt: {

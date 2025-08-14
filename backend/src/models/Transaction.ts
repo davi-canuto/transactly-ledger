@@ -3,7 +3,7 @@ import mongoose, { Document, Schema, Types } from 'mongoose'
 export interface ITransaction extends Document {
   from: Types.ObjectId | any
   to: Types.ObjectId | any
-  amount_cents: number
+  amountCents: number
   entries: Types.ObjectId[] | any[]
   createdAt: Date
   updatedAt: Date
@@ -22,7 +22,7 @@ const transactionSchema = new Schema<ITransaction>(
       ref: 'Account',
       required: true,
     },
-    amount_cents: {
+    amountCents: {
       type: Number,
       required: true,
       min: 1,

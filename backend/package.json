@@ -32,6 +32,9 @@
     "mongoose": "^7.6.3"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.7",
+    "@graphql-codegen/introspection": "^4.0.3",
+    "@graphql-codegen/schema-ast": "^4.1.0",
     "@types/jest": "^29.5.5",
     "@types/koa": "^3.0.0",
     "@types/koa-bodyparser": "^4.3.12",

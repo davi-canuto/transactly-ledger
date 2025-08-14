@@ -59,7 +59,7 @@ const QueryType = new GraphQLObjectType({
         }
 
         const ledgerEntries = await LedgerEntry.find({ account: id })
-        const calculatedBalance = ledgerEntries.reduce((sum, entry) => sum + entry.amount_cents, 0)
+        const calculatedBalance = ledgerEntries.reduce((sum, entry) => sum + entry.amountCents, 0)
 
         return calculatedBalance
       },

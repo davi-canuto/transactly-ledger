@@ -1,13 +1,14 @@
-import { GraphQLInt, GraphQLID, GraphQLNonNull } from 'graphql'
+import { GraphQLInt, GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql'
 import { mutationWithClientMutationId, fromGlobalId } from 'graphql-relay'
 import mongoose from 'mongoose'
-import { Account, Transaction, LedgerEntry, ITransaction } from '../models/index.js'
+import { Account, Transaction, LedgerEntry, IdempotencyKey, ITransaction } from '../models/index.js'
 import { TransactionType } from '../schema/types/Transaction.js'
 
 interface CreateTransactionInput {
   fromAccountId: string
   toAccountId: string
   amountCents: number
+  idempotencyKey: string
 }
 
 interface CreateTransactionPayload {
@@ -27,6 +28,9 @@ const createTransactionMutation = mutationWithClientMutationId<CreateTransaction
     amountCents: {
       type: new GraphQLNonNull(GraphQLInt),
     },
+    idempotencyKey: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
   },
 
   outputFields: {
@@ -36,7 +40,13 @@ const createTransactionMutation = mutationWithClientMutationId<CreateTransaction
     },
   },
 
-  mutateAndGetPayload: async ({ fromAccountId, toAccountId, amountCents }: CreateTransactionInput): Promise<CreateTransactionPayload> => {
+  mutateAndGetPayload: async ({ fromAccountId, toAccountId, amountCents, idempotencyKey }: CreateTransactionInput): Promise<CreateTransactionPayload> => {
+    // Check for existing idempotency key
+    const existingKey = await IdempotencyKey.findOne({ key: idempotencyKey })
+    if (existingKey) {
+      return existingKey.result
+    }
+
     const { id: fromId } = fromGlobalId(fromAccountId)
     const { id: toId } = fromGlobalId(toAccountId)
 
@@ -59,28 +69,28 @@ const createTransactionMutation = mutationWithClientMutationId<CreateTransaction
       throw new Error('Destination account not found')
     }
 
-    if (fromAccount.balance_cents < amountCents) {
+    if (fromAccount.balanceCents < amountCents) {
       throw new Error('Insufficient balance')
     }
 
     const transaction = new Transaction({
       from: fromId,
       to: toId,
-      amount_cents: amountCents,
+      amountCents: amountCents,
     })
 
     await transaction.save()
 
     const debitEntry = new LedgerEntry({
       account: fromId,
-      amount_cents: -amountCents,
+      amountCents: -amountCents,
       transaction: transaction._id,
       meta: { type: 'debit', description: `Transfer to ${toAccount.name}` },
     })
 
     const creditEntry = new LedgerEntry({
       account: toId,
-      amount_cents: amountCents,
+      amountCents: amountCents,
       transaction: transaction._id,
       meta: { type: 'credit', description: `Transfer from ${fromAccount.name}` },
     })
@@ -91,15 +101,22 @@ const createTransactionMutation = mutationWithClientMutationId<CreateTransaction
     transaction.entries = [debitEntry._id, creditEntry._id]
     await transaction.save()
 
-    fromAccount.balance_cents -= amountCents
-    toAccount.balance_cents += amountCents
+    fromAccount.balanceCents -= amountCents
+    toAccount.balanceCents += amountCents
 
     await fromAccount.save()
     await toAccount.save()
 
     await transaction.populate('from to')
 
-    return { transaction }
+    const result = { transaction }
+
+    await IdempotencyKey.create({
+      key: idempotencyKey,
+      result,
+    })
+
+    return result
   },
 })
 

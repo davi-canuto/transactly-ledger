@@ -1,0 +1,188 @@
+"""Exposes a URL that specifies the behavior of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behavior of this scalar."""
+  url: String!
+) on SCALAR
+
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
+type Account {
+  """The ID of an object"""
+  id: ID!
+  name: String
+  balanceCents: Int
+  createdAt: String
+}
+
+"""A connection to a list of items."""
+type AccountConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AccountEdge]
+}
+
+"""An edge in a connection."""
+type AccountEdge {
+  """The item at the end of the edge"""
+  node: Account
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+input CreateAccountInput {
+  name: String!
+  initialBalanceCents: Int = 0
+  clientMutationId: String
+}
+
+type CreateAccountPayload {
+  account: Account
+  clientMutationId: String
+}
+
+input CreateTransactionInput {
+  fromAccountId: ID!
+  toAccountId: ID!
+  amountCents: Int!
+  clientMutationId: String
+}
+
+type CreateTransactionPayload {
+  transaction: Transaction
+  clientMutationId: String
+}
+
+type LedgerEntry {
+  """The ID of an object"""
+  id: ID!
+  account: Account
+  amountCents: Int
+  transaction: Transaction
+  createdAt: String
+}
+
+"""A connection to a list of items."""
+type LedgerEntryConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LedgerEntryEdge]
+}
+
+"""An edge in a connection."""
+type LedgerEntryEdge {
+  """The item at the end of the edge"""
+  node: LedgerEntry
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Mutation {
+  createAccount(input: CreateAccountInput!): CreateAccountPayload
+  createTransaction(input: CreateTransactionInput!): CreateTransactionPayload
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  accounts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): AccountConnection
+  transactions(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): TransactionConnection
+  ledgerEntries(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): LedgerEntryConnection
+  accountBalance(accountId: ID!): Int
+}
+
+type Transaction {
+  """The ID of an object"""
+  id: ID!
+  from: Account
+  to: Account
+  amountCents: Int
+  createdAt: String
+}
+
+"""A connection to a list of items."""
+type TransactionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TransactionEdge]
+}
+
+"""An edge in a connection."""
+type TransactionEdge {
+  """The item at the end of the edge"""
+  node: Transaction
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+

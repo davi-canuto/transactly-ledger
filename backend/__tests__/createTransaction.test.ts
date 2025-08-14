@@ -21,14 +21,14 @@ describe('createTransaction mutation', () => {
   test('should create a transaction between two accounts', async () => {
     const fromAccount = await Account.create({
       name: 'John Doe',
-      initial_balance_cents: 100000,
-      balance_cents: 100000,
+      initialBalanceCents: 100000,
+      balanceCents: 100000,
     })
 
     const toAccount = await Account.create({
       name: 'Jane Smith',
-      initial_balance_cents: 50000,
-      balance_cents: 50000,
+      initialBalanceCents: 50000,
+      balanceCents: 50000,
     })
 
     const input = {
@@ -40,34 +40,34 @@ describe('createTransaction mutation', () => {
     const result = await (createTransactionMutation.resolve as any)(null, { input }, {}, {})
 
     expect(result.transaction).toBeDefined()
-    expect(result.transaction.amount_cents).toBe(20000)
+    expect(result.transaction.amountCents).toBe(20000)
     expect(result.transaction.from._id.toString()).toBe(fromAccount._id.toString())
     expect(result.transaction.to._id.toString()).toBe(toAccount._id.toString())
 
     const updatedFromAccount = await Account.findById(fromAccount._id)
     const updatedToAccount = await Account.findById(toAccount._id)
 
-    expect(updatedFromAccount!.balance_cents).toBe(80000)
-    expect(updatedToAccount!.balance_cents).toBe(70000)
+    expect(updatedFromAccount!.balanceCents).toBe(80000)
+    expect(updatedToAccount!.balanceCents).toBe(70000)
 
     const ledgerEntries = await LedgerEntry.find({ transaction: result.transaction._id })
     expect(ledgerEntries).toHaveLength(2)
 
-    const debitEntry = ledgerEntries.find((entry) => entry.amount_cents < 0)
-    const creditEntry = ledgerEntries.find((entry) => entry.amount_cents > 0)
+    const debitEntry = ledgerEntries.find((entry) => entry.amountCents < 0)
+    const creditEntry = ledgerEntries.find((entry) => entry.amountCents > 0)
 
-    expect(debitEntry!.amount_cents).toBe(-20000)
+    expect(debitEntry!.amountCents).toBe(-20000)
     expect(debitEntry!.account.toString()).toBe(fromAccount._id.toString())
 
-    expect(creditEntry!.amount_cents).toBe(20000)
+    expect(creditEntry!.amountCents).toBe(20000)
     expect(creditEntry!.account.toString()).toBe(toAccount._id.toString())
   })
 
   test('should fail when transferring to the same account', async () => {
     const account = await Account.create({
       name: 'John Doe',
-      initial_balance_cents: 100000,
-      balance_cents: 100000,
+      initialBalanceCents: 100000,
+      balanceCents: 100000,
     })
 
     const input = {
@@ -84,14 +84,14 @@ describe('createTransaction mutation', () => {
   test('should fail when amount is zero or negative', async () => {
     const fromAccount = await Account.create({
       name: 'John Doe',
-      initial_balance_cents: 100000,
-      balance_cents: 100000,
+      initialBalanceCents: 100000,
+      balanceCents: 100000,
     })
 
     const toAccount = await Account.create({
       name: 'Jane Smith',
-      initial_balance_cents: 50000,
-      balance_cents: 50000,
+      initialBalanceCents: 50000,
+      balanceCents: 50000,
     })
 
     const input = {
@@ -113,14 +113,14 @@ describe('createTransaction mutation', () => {
   test('should fail when source account has insufficient balance', async () => {
     const fromAccount = await Account.create({
       name: 'John Doe',
-      initial_balance_cents: 10000,
-      balance_cents: 10000,
+      initialBalanceCents: 10000,
+      balanceCents: 10000,
     })
 
     const toAccount = await Account.create({
       name: 'Jane Smith',
-      initial_balance_cents: 50000,
-      balance_cents: 50000,
+      initialBalanceCents: 50000,
+      balanceCents: 50000,
     })
 
     const input = {
@@ -137,8 +137,8 @@ describe('createTransaction mutation', () => {
   test('should fail when source account does not exist', async () => {
     const toAccount = await Account.create({
       name: 'Jane Smith',
-      initial_balance_cents: 50000,
-      balance_cents: 50000,
+      initialBalanceCents: 50000,
+      balanceCents: 50000,
     })
 
     const fakeId = new mongoose.Types.ObjectId()
@@ -156,8 +156,8 @@ describe('createTransaction mutation', () => {
   test('should fail when destination account does not exist', async () => {
     const fromAccount = await Account.create({
       name: 'John Doe',
-      initial_balance_cents: 100000,
-      balance_cents: 100000,
+      initialBalanceCents: 100000,
+      balanceCents: 100000,
     })
 
     const fakeId = new mongoose.Types.ObjectId()

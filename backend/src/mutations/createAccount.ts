@@ -1,11 +1,12 @@
 import { GraphQLString, GraphQLInt, GraphQLNonNull } from 'graphql'
 import { mutationWithClientMutationId } from 'graphql-relay'
-import { Account, IAccount } from '../models/index.js'
+import { Account, IdempotencyKey, IAccount } from '../models/index.js'
 import { AccountType } from '../schema/types/Account.js'
 
 interface CreateAccountInput {
   name: string
   initialBalanceCents?: number
+  idempotencyKey: string
 }
 
 interface CreateAccountPayload {
@@ -23,6 +24,9 @@ const createAccountMutation = mutationWithClientMutationId<CreateAccountInput, C
       type: GraphQLInt,
       defaultValue: 0,
     },
+    idempotencyKey: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
   },
 
   outputFields: {
@@ -32,16 +36,28 @@ const createAccountMutation = mutationWithClientMutationId<CreateAccountInput, C
     },
   },
 
-  mutateAndGetPayload: async ({ name, initialBalanceCents = 0 }: CreateAccountInput): Promise<CreateAccountPayload> => {
+  mutateAndGetPayload: async ({ name, initialBalanceCents = 0, idempotencyKey }: CreateAccountInput): Promise<CreateAccountPayload> => {
+    const existingKey = await IdempotencyKey.findOne({ key: idempotencyKey })
+    if (existingKey) {
+      return existingKey.result
+    }
+
     const account = new Account({
       name,
-      initial_balance_cents: initialBalanceCents,
-      balance_cents: initialBalanceCents,
+      initialBalanceCents: initialBalanceCents,
+      balanceCents: initialBalanceCents,
     })
 
     await account.save()
 
-    return { account }
+    const result = { account }
+
+    await IdempotencyKey.create({
+      key: idempotencyKey,
+      result,
+    })
+
+    return result
   },
 })
 

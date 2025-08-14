@@ -1,0 +1,5 @@
+schema: src/server.ts
+generates:
+  schema.graphql:
+    plugins:
+      - schema-ast

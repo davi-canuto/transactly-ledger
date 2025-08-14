@@ -2,8 +2,8 @@ import mongoose, { Document, Schema } from 'mongoose'
 
 export interface IAccount extends Document {
   name: string
-  initial_balance_cents: number
-  balance_cents: number
+  initialBalanceCents: number
+  balanceCents: number
   createdAt: Date
   updatedAt: Date
   toJSON(): any
@@ -15,13 +15,14 @@ const accountSchema = new Schema<IAccount>(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
-    initial_balance_cents: {
+    initialBalanceCents: {
       type: Number,
       required: true,
       default: 0,
     },
-    balance_cents: {
+    balanceCents: {
       type: Number,
       required: true,
       default: 0,

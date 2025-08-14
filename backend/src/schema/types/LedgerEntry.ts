@@ -12,7 +12,7 @@ const LedgerEntryType = new GraphQLObjectType<ILedgerEntry>({
       type: AccountType,
       resolve: (entry: ILedgerEntry) => entry.account,
     },
-    amount_cents: {
+    amountCents: {
       type: GraphQLInt,
     },
     transaction: {

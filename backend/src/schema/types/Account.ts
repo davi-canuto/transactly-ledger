@@ -9,7 +9,7 @@ const AccountType = new GraphQLObjectType<IAccount>({
     name: {
       type: GraphQLString,
     },
-    balance_cents: {
+    balanceCents: {
       type: GraphQLInt,
     },
     createdAt: {
