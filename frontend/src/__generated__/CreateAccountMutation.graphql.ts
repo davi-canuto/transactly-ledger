@@ -20,7 +20,7 @@ export type CreateAccountMutation$variables = {
 export type CreateAccountMutation$data = {
   readonly createAccount: {
     readonly account: {
-      readonly balance_cents: number | null | undefined;
+      readonly balanceCents: number | null | undefined;
       readonly createdAt: string | null | undefined;
       readonly id: string;
       readonly name: string | null | undefined;
@@ -82,7 +82,7 @@ v1 = [
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "balance_cents",
+            "name": "balanceCents",
             "storageKey": null
           },
           {
@@ -129,7 +129,7 @@ return {
     "metadata": {},
     "name": "CreateAccountMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateAccountMutation(\n  $input: CreateAccountInput!\n) {\n  createAccount(input: $input) {\n    account {\n      id\n      name\n      balance_cents\n      createdAt\n    }\n    clientMutationId\n  }\n}\n"
+    "text": "mutation CreateAccountMutation(\n  $input: CreateAccountInput!\n) {\n  createAccount(input: $input) {\n    account {\n      id\n      name\n      balanceCents\n      createdAt\n    }\n    clientMutationId\n  }\n}\n"
   }
 };
 })();

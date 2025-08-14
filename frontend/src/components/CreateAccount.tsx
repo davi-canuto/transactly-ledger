@@ -8,7 +8,7 @@ const CreateAccountMutationGraphQL = graphql`
       account {
         id
         name
-        balance_cents
+        balanceCents
         createdAt
       }
       clientMutationId

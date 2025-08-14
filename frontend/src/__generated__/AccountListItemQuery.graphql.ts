@@ -17,7 +17,7 @@ export type AccountListItemQuery$data = {
   readonly ledgerEntries: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly amount_cents: number | null | undefined;
+        readonly amountCents: number | null | undefined;
         readonly createdAt: string | null | undefined;
         readonly id: string;
         readonly transaction: {
@@ -77,7 +77,7 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "amount_cents",
+  "name": "amountCents",
   "storageKey": null
 },
 v5 = {
@@ -264,7 +264,7 @@ return {
     "metadata": {},
     "name": "AccountListItemQuery",
     "operationKind": "query",
-    "text": "query AccountListItemQuery(\n  $accountId: ID!\n) {\n  accountBalance(accountId: $accountId)\n  ledgerEntries(first: 10) {\n    edges {\n      node {\n        id\n        amount_cents\n        createdAt\n        transaction {\n          id\n          from {\n            name\n            id\n          }\n          to {\n            name\n            id\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query AccountListItemQuery(\n  $accountId: ID!\n) {\n  accountBalance(accountId: $accountId)\n  ledgerEntries(first: 10) {\n    edges {\n      node {\n        id\n        amountCents\n        createdAt\n        transaction {\n          id\n          from {\n            name\n            id\n          }\n          to {\n            name\n            id\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

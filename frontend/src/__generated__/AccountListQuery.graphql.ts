@@ -16,7 +16,7 @@ export type AccountListQuery$data = {
   readonly accounts: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly balance_cents: number | null | undefined;
+        readonly balanceCents: number | null | undefined;
         readonly createdAt: string | null | undefined;
         readonly id: string;
         readonly name: string | null | undefined;
@@ -86,7 +86,7 @@ v1 = [
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "balance_cents",
+                "name": "balanceCents",
                 "storageKey": null
               },
               {
@@ -129,7 +129,7 @@ return {
     "metadata": {},
     "name": "AccountListQuery",
     "operationKind": "query",
-    "text": "query AccountListQuery(\n  $first: Int!\n) {\n  accounts(first: $first) {\n    edges {\n      node {\n        id\n        name\n        balance_cents\n        createdAt\n      }\n    }\n  }\n}\n"
+    "text": "query AccountListQuery(\n  $first: Int!\n) {\n  accounts(first: $first) {\n    edges {\n      node {\n        id\n        name\n        balanceCents\n        createdAt\n      }\n    }\n  }\n}\n"
   }
 };
 })();

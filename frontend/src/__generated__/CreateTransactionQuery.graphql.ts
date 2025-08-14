@@ -16,7 +16,7 @@ export type CreateTransactionQuery$data = {
   readonly accounts: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly balance_cents: number | null | undefined;
+        readonly balanceCents: number | null | undefined;
         readonly id: string;
         readonly name: string | null | undefined;
       } | null | undefined;
@@ -85,7 +85,7 @@ v1 = [
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "balance_cents",
+                "name": "balanceCents",
                 "storageKey": null
               }
             ],
@@ -121,7 +121,7 @@ return {
     "metadata": {},
     "name": "CreateTransactionQuery",
     "operationKind": "query",
-    "text": "query CreateTransactionQuery(\n  $first: Int!\n) {\n  accounts(first: $first) {\n    edges {\n      node {\n        id\n        name\n        balance_cents\n      }\n    }\n  }\n}\n"
+    "text": "query CreateTransactionQuery(\n  $first: Int!\n) {\n  accounts(first: $first) {\n    edges {\n      node {\n        id\n        name\n        balanceCents\n      }\n    }\n  }\n}\n"
   }
 };
 })();

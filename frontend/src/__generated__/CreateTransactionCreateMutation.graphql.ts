@@ -22,7 +22,7 @@ export type CreateTransactionCreateMutation$data = {
   readonly createTransaction: {
     readonly clientMutationId: string | null | undefined;
     readonly transaction: {
-      readonly amount_cents: number | null | undefined;
+      readonly amountCents: number | null | undefined;
       readonly createdAt: string | null | undefined;
       readonly from: {
         readonly id: string;
@@ -114,7 +114,7 @@ v3 = [
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "amount_cents",
+            "name": "amountCents",
             "storageKey": null
           },
           {
@@ -161,7 +161,7 @@ return {
     "metadata": {},
     "name": "CreateTransactionCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateTransactionCreateMutation(\n  $input: CreateTransactionInput!\n) {\n  createTransaction(input: $input) {\n    transaction {\n      id\n      from {\n        id\n        name\n      }\n      to {\n        id\n        name\n      }\n      amount_cents\n      createdAt\n    }\n    clientMutationId\n  }\n}\n"
+    "text": "mutation CreateTransactionCreateMutation(\n  $input: CreateTransactionInput!\n) {\n  createTransaction(input: $input) {\n    transaction {\n      id\n      from {\n        id\n        name\n      }\n      to {\n        id\n        name\n      }\n      amountCents\n      createdAt\n    }\n    clientMutationId\n  }\n}\n"
   }
 };
 })();

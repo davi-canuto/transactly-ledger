@@ -10,7 +10,7 @@ const AccountsForTransactionQueryGraphQL = graphql`
         node {
           id
           name
-          balance_cents
+          balanceCents
         }
       }
     }
@@ -30,7 +30,7 @@ const CreateTransactionMutationGraphQL = graphql`
           id
           name
         }
-        amount_cents
+        amountCents
         createdAt
       }
       clientMutationId
@@ -85,7 +85,7 @@ export default function CreateTransaction() {
         if (response.createTransaction?.transaction) {
           const tx = response.createTransaction.transaction
           setMessage(
-            `Transaction created! $${((tx.amount_cents || 0) / 100).toFixed(2)} transferred from "${tx.from?.name}" to "${tx.to?.name}"`
+            `Transaction created! $${((tx.amountCents || 0) / 100).toFixed(2)} transferred from "${tx.from?.name}" to "${tx.to?.name}"`
           )
           setFromAccountId('')
           setToAccountId('')
@@ -127,7 +127,7 @@ export default function CreateTransaction() {
               {accounts.map((edge) => 
                 edge?.node && (
                   <option key={edge.node.id} value={edge.node.id}>
-                    {edge.node.name} - ${((edge.node.balance_cents || 0) / 100).toFixed(2)}
+                    {edge.node.name} - ${((edge.node.balanceCents || 0) / 100).toFixed(2)}
                   </option>
                 )
               )}
@@ -147,7 +147,7 @@ export default function CreateTransaction() {
               {accounts.map((edge) => 
                 edge?.node && edge.node.id !== fromAccountId && (
                   <option key={edge.node.id} value={edge.node.id}>
-                    {edge.node.name} - ${((edge.node.balance_cents || 0) / 100).toFixed(2)}
+                    {edge.node.name} - ${((edge.node.balanceCents || 0) / 100).toFixed(2)}
                   </option>
                 )
               )}

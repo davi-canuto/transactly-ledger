@@ -6,7 +6,7 @@ type AccountListItemProps = {
   account: {
     id: string
     name: string | null | undefined
-    balance_cents: number | null | undefined
+    balanceCents: number | null | undefined
     createdAt: string | null | undefined
   }
 }
@@ -18,7 +18,7 @@ const AccountBalanceQueryGraphQL = graphql`
       edges {
         node {
           id
-          amount_cents
+          amountCents
           createdAt
           transaction {
             id
@@ -57,7 +57,7 @@ export default function AccountListItem({ account }: AccountListItemProps) {
       <div className="account-header" onClick={toggleDetails}>
         <h3>{account.name || 'Unnamed Account'}</h3>
         <div className="account-balance">
-          {formatCurrency(account.balance_cents)}
+          {formatCurrency(account.balanceCents)}
         </div>
         <small>Created: {formatDate(account.createdAt)}</small>
         <button className="details-toggle">
@@ -89,8 +89,8 @@ function AccountDetails({ accountId }: { accountId: string }) {
               edge?.node && (
                 <div key={edge.node.id} className="transaction-item">
                   <div className="transaction-amount">
-                    {edge.node.amount_cents && edge.node.amount_cents > 0 ? '+' : ''}
-                    ${edge.node.amount_cents ? (edge.node.amount_cents / 100).toFixed(2) : '0.00'}
+                    {edge.node.amountCents && edge.node.amountCents > 0 ? '+' : ''}
+                    ${edge.node.amountCents ? (edge.node.amountCents / 100).toFixed(2) : '0.00'}
                   </div>
                   <div className="transaction-details">
                     <div>From: {edge.node.transaction?.from?.name || 'Unknown'}</div>

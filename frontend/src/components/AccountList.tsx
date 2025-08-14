@@ -9,7 +9,7 @@ const AccountListQueryGraphQL = graphql`
         node {
           id
           name
-          balance_cents
+          balanceCents
           createdAt
         }
       }
